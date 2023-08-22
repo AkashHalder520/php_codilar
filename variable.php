@@ -6,6 +6,18 @@
     A variable name can only contain alpha-numeric characters and underscores (A-z, 0-9, and _ )
     Variable names are case-sensitive ($age and $AGE are two different variables)
 
+    PHP supports the following data types:
+
+    String
+    Integer
+    Float (floating point numbers - also called double)
+    Boolean
+    Array
+    Object
+    NULL
+    Resource
+
+
 -->
 <?php
 $a="akashss<br>";
