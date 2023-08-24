@@ -12,4 +12,7 @@ echo "$noofword<br>";
 $revstr=strrev($sentene);
 echo "$revstr";
 echo $revstr?"true":"false";
+
+$arr = array('Hello','World!','Beautiful','Day!');
+echo implode(" ",$arr); // imlode function is used to convert from array to string implode(separator,array)
 ?>
