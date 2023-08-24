@@ -24,7 +24,7 @@
 
     $email = $password = $gender = $city = $education = "";
 
-    if (isset($_POST['email'])) { //isset function returns true if the variable exists and is not NULL, otherwise it returns false.
+    if (isset($_POST['email'])) { //isset function returns true if the variable exists and is not NULL, otherwise it returns false. and error will show in browser
         $email = $_POST['email'];
     }
     if (isset($_POST['password'])) {
