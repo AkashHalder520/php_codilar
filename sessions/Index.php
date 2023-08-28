@@ -9,7 +9,7 @@
                 $_SESSION['emailId']=$emailId;
                 $_SESSION['password']=$password;
                 header("location:./page2.php");
-                die();//exits from php tag
+                die();
         }
         else{
             echo "<br>Invalid Credentials</br>";
