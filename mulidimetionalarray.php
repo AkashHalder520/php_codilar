@@ -1,4 +1,4 @@
-<?php 
+<?php
 // $emp= [
 //     [1,"krishna","manager",50000],
 //     [2,"Akash","Developer",70000],
@@ -27,45 +27,45 @@
 // echo "</table>";
 
 //multidimentional assoiative array
-$marksofstd= [
-    "akash"=>[
-        "physics"=>78,
-        "maths"=>70,
-        "chemistry"=>76
+$marksofstd = [
+    "akash" => [
+        "physics" => 78,
+        "maths" => 70,
+        "chemistry" => 76
     ],
-    "Rakesh"=>[
-        "physics"=>58,
-        "maths"=>80,
-        "chemistry"=>66
+    "Rakesh" => [
+        "physics" => 58,
+        "maths" => 80,
+        "chemistry" => 66
     ],
-    "Reshmi"=>[
-        "physics"=>88,
-        "maths"=>73,
-        "chemistry"=>96
+    "Reshmi" => [
+        "physics" => 88,
+        "maths" => 73,
+        "chemistry" => 96
     ],
-    "Mohan"=>[
-        "physics"=>98,
-        "maths"=>96,
-        "chemistry"=>87
+    "Mohan" => [
+        "physics" => 98,
+        "maths" => 96,
+        "chemistry" => 87
     ]
-    ];
-    echo "<table border='2px' cellspacng='0'>";
+];
+echo "<table border='2px' cellspacng='0'>";
 
-    
+
 echo "<tr>
 <th>Name</th>
 <th>Physics</th>
 <th>Maths</th>
 <th>Chemistry</th>
 </tr>";
-foreach($marksofstd as $key=>$arrx){
-echo "<tr>
+foreach ($marksofstd as $key => $arrx) {
+    echo "<tr>
     <td>$key</td>";
-    foreach($arrx as $key=>$value){
+    foreach ($arrx as $key => $value) {
         echo "<td>$value</td>";
     }
-echo "</tr>";
+    echo "</tr>";
 }
 echo "</table>"
 
-?>
+    ?>

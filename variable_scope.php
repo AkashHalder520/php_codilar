@@ -11,7 +11,8 @@ var_dump() function returns the data type and value:
 <?php
 $x = 5; // global scope
 
-function myTest() {
+function myTest()
+{
   // using x inside this function will generate an error
 //   echo "<p>Variable x inside function is: $x</p>";
 }
@@ -36,14 +37,15 @@ echo "<p>Variable x outside function is: $x</p>";
 $x = 5;
 $y = 10;
 
-function myTestY() {
+function myTestY()
+{
   global $x, $y;
   $y = $x + $y; // storing the value in global decleared y
 }
 
 myTestY();
 echo " global scope $y <br>"; // outputs 15
-?> 
+?>
 
 <!-- 
 STATIC KEYWORD    
@@ -51,7 +53,8 @@ Normally, when a function is completed/executed, all of its variables are delete
 
 To do this, use the static keyword when you first declare the variable: -->
 <?php
-function myTestx() {
+function myTestx()
+{
   static $x = 0; // MEMORY OF X WILL NOT GET DELETED
   echo $x;
   $x++;

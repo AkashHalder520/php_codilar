@@ -5,23 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-<style>
-    #educationlable {
-        margin-left: 20px !important;
-    }
-</style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <style>
+        #educationlable {
+            margin-left: 20px !important;
+        }
+    </style>
 </head>
 
 <body>
-    
+
     <!-- any thing goes throug post it by default converts to string -->
     <?php
     // echo "<pre>";
     // print_r($_POST);
     // echo "</pre>"
-
+    
     $email = $password = $gender = $city = $education = "";
 
     if (isset($_POST['email'])) { //isset function returns true if the variable exists and is not NULL, otherwise it returns false. and error will show in browser
@@ -40,7 +43,7 @@
         $education = implode(",", $_POST['education']);
     }
     // echo($education); using implode function to convert array to string
-
+    
     echo "Email:- $email <br>";
     echo "password:- $password <br>";
     echo "gender:- $gender <br>";
@@ -96,7 +99,7 @@
                 echo "<option>$value</option>";
             }
             ?>
-       
+
         </select>
 
         <div class="row mb-3">
@@ -106,22 +109,22 @@
                 <!-- we can have multiple ceckbox here also we can use array -->
                 <?php
                 $checkboxarr = array('B.tech', 'M.Tech', 'BCA', 'MCA', 'B.Sc', 'Others')
-                ?>
+                    ?>
                 <div class="form-check">
                     <?php
                     foreach ($checkboxarr as $key => $value) {
                         echo "<input  type='checkbox' id='educationlable' name='education[]' value=$value>
                         <label>"
-                    ?>
-                    <?php echo "$value";
+                            ?>
+                        <?php echo "$value";
                     } ?>
-                    </label> "
+
 
 
                 </div>
                 <button type="submit" class="btn btn-primary">Sign in</button>
             </div>
-            
+
     </form>
 </body>
 

@@ -12,20 +12,23 @@ If you create a __construct() function, PHP will automatically call this functio
 
 
 <?php
-class car {
+class car
+{
     public $color;
     public $model;
-    function assign($parameter1,$parameter2) {
-        $this->color=$parameter1;
-        $this->model=$parameter2;
+    function assign($parameter1, $parameter2)
+    {
+        $this->color = $parameter1;
+        $this->model = $parameter2;
     }
-    function output(){
+    function output()
+    {
         echo "the color is  $this->color";
         echo "the model is  $this->model";
     }
 }
-$mycar=new car();
-$mycar -> assign("blue","honda");
-$mycar -> output();
+$mycar = new car();
+$mycar->assign("blue", "honda");
+$mycar->output();
 
 ?>

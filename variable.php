@@ -20,11 +20,11 @@
 
 -->
 <?php
-$a="akashss<br>";
+$a = "akashss<br>";
 echo $a;
-$x=8;
-$c=8;
-echo $x+$c;
-echo "<h1>".$a."</h1>";// whenever we use html in echo we use them in ""
+$x = 8;
+$c = 8;
+echo $x + $c;
+echo "<h1>" . $a . "</h1>"; // whenever we use html in echo we use them in ""
 echo "i love me $a"; // we can use concatination also
 ?>
