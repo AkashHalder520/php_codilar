@@ -28,7 +28,7 @@ $tempname= $_FILES["photo"]["tmp_name"];
 $size= $_FILES["photo"]["size"];
 
 $uploadpath="images/".$filename;
-move_uploaded_file($tempname,$uploadpath);
+echo move_uploaded_file($tempname,$uploadpath);
 
 
 // $_FILES[input-field-name][name]

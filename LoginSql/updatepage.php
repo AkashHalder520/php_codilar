@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
-    <!-- script for image preview -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $(".upload-image").click(function() {
@@ -31,47 +30,100 @@
             });
         });
     </script>
+    <script>
+        if (document.getElementById("image").value == "") {
+            <
+            img src = "<?php echo $data[0]['profile_img'] ?>"
+            alt = "your image"
+            height = "200px"
+            width = "200px" / >
+        }
+    </script>
 </head>
 
+
 <body>
-    <form method="post" action='./actionpage.php' enctype="multipart/form-data"> <!-- we have to encript the image so we use enctype-->
+    <h1>update page</h1>
+    <?php
+    $hostname = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "registration_db";
+
+    // Create connection
+    $conn = new mysqli($hostname, $username, $password, $database);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $id = $_GET['id'];
+    echo "$id";
+
+    $sqlfetchquery = "SELECT profile_img,name,email,gender,city,education  FROM `user_details` WHERE id=$id";
+    $response = $conn->query("$sqlfetchquery");
+    // echo "<pre>";
+    // print_r($response);
+    // echo "<pre>";
+
+    //fetch all data at once in associative format
+    $data = $response->fetch_all(MYSQLI_ASSOC);
+    // echo "<pre>";
+    // print_r($data);
+    // echo $data[0]['profile_img'];
+    // echo "<pre>";
+    ?>
+    <form method="post" action="./updatescript.php?id=<?php echo $id ?>" enctype="multipart/form-data">
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputEmail3" name="name">
+                <input type="text" class="form-control" id="inputEmail3" name="name" value="<?php echo $data[0]['name']; ?>">
             </div>
         </div>
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" name="email">
+                <input type="email" class="form-control" id="inputEmail3" name="email" value="<?php echo $data[0]['email']; ?> ">
             </div>
         </div>
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
             <div class="col-sm-10">
                 <input type="password" class="form-control" id="inputPassword3" name="password">
             </div>
-        </div>
+        </div> -->
+
+
         <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Upload Profile Image</label>
             <div class="col-sm-10">
-            <div id="preview" class="mt-2 mb-2"></div>
+                <!-- <input type="file" class="form-control" name="photo"> -->
+
+                <div id="preview" class="mt-2 mb-2"></div>
                 <input type="file" name="photo" id="image" class="form-control mt-2 mb-2" style="width:30%" />
-                
+                <img src="<?php echo $data[0]['profile_img'] ?>" alt="your image" height="200px" width="200px" />
+
+
             </div>
         </div>
+
+        <!-- for automatic select of radio buttons -->
+        <?php
+        $malechecked = "";
+        $femalcheck = "";
+        $xxx = $data[0]['gender'];
+        $xxx === "male" ? $malechecked = "checked" : $femalcheck = "checked";
+        ?>
         <fieldset class="row mb-3">
             <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
             <div class="col-sm-10">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="Male" checked>
+                    <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="male" <?php echo $malechecked ?>>
                     <label class="form-check-label" for="gridRadios1">
                         Male
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female">
+                    <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female" <?php echo $femalcheck ?>>
                     <label class="form-check-label" for="gridRadios2">
                         Female
                     </label>
@@ -94,7 +146,7 @@
         <select name="city" id="">
             <?php
             foreach ($cityarr as $key => $value) {
-                echo "<option>$value</option>";
+                echo "<option >$value</option>";
             }
             ?>
 
@@ -120,11 +172,15 @@
 
 
                 </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary" >Update</button>
             </div>
 
     </form>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+
 </body>
 
 </html>
