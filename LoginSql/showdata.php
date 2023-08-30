@@ -11,8 +11,8 @@
 <body>
     <h1>Display page</h1>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-  <a class="btn btn-primary me-md-2" type="button" href="registration.php">Add details</a>
-</div>
+        <a class="btn btn-primary me-md-2" type="button" href="registration.php">Add details</a>
+    </div>
     <table class="table table-bordered">
         <tr>
             <th>ID</th>
@@ -42,56 +42,59 @@
         $getdataquery = "SELECT id,profile_img,name,email,gender,city,education  FROM `user_details`";
         $response = $conn->query("$getdataquery");
         // print_r($response); 
-        
+
 
         // to find the number of rows in the table********
         $num = mysqli_num_rows($response);
         if ($num > 0) {
             $row = $response->fetch_all(MYSQLI_ASSOC);
-                // echo "<pre>";
-                // print_r($row);
-                // echo "</pre>";
+            // echo "<pre>";
+            // print_r($row);
+            // echo "</pre>";
         }
         foreach ($row as $key => $values) {
             // echo "<pre>";
             // print_r($values);
             // echo "</pre>";
-            ?>
+        ?>
             <tr>
                 <?php
                 foreach ($values as $key => $valuesx) {
-                    ?>
+                ?>
                     <td>
-                        <?php 
-                        if ($key=='profile_img'){
-                            echo "<img src='".$valuesx."' height= '100px' width='100px'>";
-                        }else
-                        echo "$valuesx" 
+                        <?php
+                        if ($key == 'profile_img') {
+                            echo "<img src='" . $valuesx . "' height= '100px' width='100px'>";
+                        } else
+                            echo "$valuesx"
                         ?>
 
                     </td>
 
-                <?php } 
+                <?php }
                 ?>
                 <td>
-                    
-                    <a  href="updatepage.php?id=<?php echo $values['id'] ?>"><button>update<button></a>
-                    <!-- <a  href="deletepage.php?id=<?php echo $values['id'] ?>"><button>Delete</button></a> -->
-                    <button onclick="checkdel()">Delete</button>
+
+                    <a href="updatepage.php?id=<?php echo $values['id'] ?>"><button>update<button></a>
+                    <a  href="deletepage.php?id=<?php echo $values['id'] ?>"><button onclick="return confirm(`Do you want to delete`)">Delete</button></a>
+                    <!-- <button id="deletebutton">Delete</button> -->
                     
                     
                 </td>
             <?php } ?>
         </tr>
     </table>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 
 </html>
-<script>
-    function checkdel(){
-    if(confirm("Do you want to Delete")){
-        window.location.href='deletepage.php?id=<?php echo $values['id']?>';
+<!-- <script>
+    const element = document.getElementById("deletebutton");
+    element.addEventListener("click", checkdel);
+
+    function checkdel() {
+        if (confirm("Do you want to Delete")) {
+            window.location.href = 'deletepage.php?id=<?php echo $values['id'] ?>';
+        }
     }
-    }
-</script>
+</script> -->

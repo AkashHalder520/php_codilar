@@ -7,7 +7,7 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
+    <!-- script for displaying the image on upload -->
     <script>
         $(document).ready(function() {
             $(".upload-image").click(function() {
@@ -30,7 +30,8 @@
             });
         });
     </script>
-    <script>
+
+    <!-- <script>
         if (document.getElementById("image").value == "") {
             <
             img src = "<?php echo $data[0]['profile_img'] ?>"
@@ -38,7 +39,7 @@
             height = "200px"
             width = "200px" / >
         }
-    </script>
+    </script> -->
 </head>
 
 
@@ -57,7 +58,7 @@
         die("Connection failed: " . $conn->connect_error);
     }
     $id = $_GET['id'];
-    echo "$id";
+    // echo "$id";
 
     $sqlfetchquery = "SELECT profile_img,name,email,gender,city,education  FROM `user_details` WHERE id=$id";
     $response = $conn->query("$sqlfetchquery");
@@ -72,6 +73,29 @@
     // echo $data[0]['profile_img'];
     // echo "<pre>";
     ?>
+
+
+    <!--    Automatically insert the value in checkbox -->
+    <?php
+
+    $educationdata = $data[0]['education'];
+    // echo $educationdata . "edication data";
+    $eduarr = explode(",", $educationdata); // explode function used to convert array to string
+
+    // print_r($eduarr)
+
+    ?>
+
+    <!-- for automatic select of radio buttons -->
+
+    <?php
+    $malechecked = "";
+    $femalcheck = "";
+    $xxx = $data[0]['gender'];
+    $xxx === "male" ? $malechecked = "checked" : $femalcheck = "checked";
+    ?>
+
+
     <form method="post" action="./updatescript.php?id=<?php echo $id ?>" enctype="multipart/form-data">
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
@@ -106,13 +130,8 @@
             </div>
         </div>
 
-        <!-- for automatic select of radio buttons -->
-        <?php
-        $malechecked = "";
-        $femalcheck = "";
-        $xxx = $data[0]['gender'];
-        $xxx === "male" ? $malechecked = "checked" : $femalcheck = "checked";
-        ?>
+
+
         <fieldset class="row mb-3">
             <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
             <div class="col-sm-10">
@@ -143,10 +162,15 @@
         // create array of city
         $cityarr = array('Delhi', 'Mumbai', 'Noida', 'kolkata', 'Hyderabad', 'Siliguri');
         ?>
-        <select name="city" id="">
+        <select name="city" id="" >
             <?php
+            $selected="";
+            $cityf=$data[0]['city'];
+            if(in_array($cityf,$cityarr)){
+            $selected="selected";
+            }
             foreach ($cityarr as $key => $value) {
-                echo "<option >$value</option>";
+                echo "<option $selected>$value</option>";
             }
             ?>
 
@@ -162,17 +186,23 @@
                 ?>
                 <div class="form-check">
                     <?php
+                    //condition for checked
                     foreach ($checkboxarr as $key => $value) {
-                        echo "<input  type='checkbox' id='educationlable' name='education[]' value=$value>
-                        <label>"
+                        $checked = "";
+                        if (in_array($value, $eduarr)) {
+                            $checked = 'checked';
+                        }
+                        echo "<input  type='checkbox' id='educationlable' name='education[]' value=$value $checked>";
                     ?>
-                    <?php echo "$value";
+                        <label>
+
+                        <?php echo "$value";
                     } ?>
-                    </label>
+                        </label>
 
 
                 </div>
-                <button type="submit" class="btn btn-primary" >Update</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </div>
 
     </form>
