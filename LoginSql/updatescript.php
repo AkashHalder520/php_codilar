@@ -24,7 +24,7 @@ $tempname= $_FILES["photo"]["tmp_name"];
 $size= $_FILES["photo"]["size"];
 
 $uploadpath="images/".$filename;
-echo move_uploaded_file($tempname,$uploadpath);
+ move_uploaded_file($tempname,$uploadpath);
 
 
     if (isset($_POST["name"])) {
@@ -49,7 +49,12 @@ echo move_uploaded_file($tempname,$uploadpath);
 
     $updateres=$conn->query("$sqlupdatequery");
     if($updateres){
-        echo "uploaded successfully";
+       echo "<script>
+        alert('updated')
+         window.location.href='./showdata.php';
+        </script>";
+        // 
+        //  header('Location:./showdata.php');
     }else{
         echo "error";
     }

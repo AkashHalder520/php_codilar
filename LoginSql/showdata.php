@@ -10,6 +10,9 @@
 
 <body>
     <h1>Display page</h1>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <a class="btn btn-primary me-md-2" type="button" href="registration.php">Add details</a>
+</div>
     <table class="table table-bordered">
         <tr>
             <th>ID</th>
@@ -72,8 +75,10 @@
                 ?>
                 <td>
                     
-                    <a  href="updatepage.php?id=<?php echo $values['id'] ?>">update</a>
-                    <!-- <button>Delete</button> -->
+                    <a  href="updatepage.php?id=<?php echo $values['id'] ?>"><button>update<button></a>
+                    <!-- <a  href="deletepage.php?id=<?php echo $values['id'] ?>"><button>Delete</button></a> -->
+                    <button onclick="checkdel()">Delete</button>
+                    
                     
                 </td>
             <?php } ?>
@@ -83,3 +88,10 @@
 </body>
 
 </html>
+<script>
+    function checkdel(){
+    if(confirm("Do you want to Delete")){
+        window.location.href='deletepage.php?id=<?php echo $values['id']?>';
+    }
+    }
+</script>

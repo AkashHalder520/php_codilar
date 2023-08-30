@@ -42,7 +42,7 @@
 </head>
 
 
-<body>
+<body class="container">
     <h1>update page</h1>
     <?php
     $hostname = "localhost";
