@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -45,6 +48,7 @@ if (isset($_POST['email'])) {
     $email=$_POST['email'];
     echo $email;
 }
+
 if (isset($_POST['password'])) {
     # code...
     $password=$_POST['password'];
@@ -64,13 +68,15 @@ if ($response === false) {
     echo "</pre>";
 }
 if(empty($rows)){
-    echo "<script>alert('not present in database')</script>";
+    echo "<script>alert('Please enter correct  email or password ')</script>";
     die();
 }
 if(!password_verify($password,$rows[0]['password_hash'])){
 echo "<script>alert('wrong password')</script>";
 }
 else{
+  //creating the session 
+  $_SESSION['email']=$email;
     echo "ok";
     header("location:showdata.php");
 }

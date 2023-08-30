@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,6 +42,10 @@
 
 
         // selecting all data except password hash from the table******
+        $email=$_SESSION['email'];
+        if(!$email){
+            header("location:index.php");
+        }
         $getdataquery = "SELECT id,profile_img,name,email,gender,city,education  FROM `user_details`";
         $response = $conn->query("$getdataquery");
         // print_r($response); 
@@ -88,13 +95,3 @@
 </body>
 
 </html>
-<!-- <script>
-    const element = document.getElementById("deletebutton");
-    element.addEventListener("click", checkdel);
-
-    function checkdel() {
-        if (confirm("Do you want to Delete")) {
-            window.location.href = 'deletepage.php?id=<?php echo $values['id'] ?>';
-        }
-    }
-</script> -->
