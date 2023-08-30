@@ -10,6 +10,9 @@
 
 <body>
     <h1>Display page</h1>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <a class="btn btn-primary me-md-2" type="button" href="registration.php">Add details</a>
+</div>
     <table class="table table-bordered">
         <tr>
             <th>ID</th>

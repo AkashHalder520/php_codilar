@@ -34,6 +34,7 @@
 </head>
 
 <body>
+    <h1>Add user details</h1>
     <form method="post" action='./actionpage.php' enctype="multipart/form-data"> <!-- we have to encript the image so we use enctype-->
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
