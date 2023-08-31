@@ -77,7 +77,11 @@ echo "<script>alert('wrong password')</script>";
 else{
   //creating the session 
   $_SESSION['email']=$email;
-    echo "ok";
+    // echo "ok";
+
+$lastdatetime="UPDATE `user_details` SET lastlogin = now() WHERE email = '$email'";
+$response = $conn->query($lastdatetime);
+// echo $response;
     header("location:showdata.php");
 }
 
