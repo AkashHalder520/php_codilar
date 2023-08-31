@@ -40,7 +40,7 @@ echo move_uploaded_file($tempname,$uploadpath);
 
 
 // validation of the registration
-$email = $password = $gender = $city = $education = $name = "";
+$email = $password = $gender = $city = $education = $name =  $lastlogin="";
 if(isset($_POST["name"])){
  $name=$_POST['name'];
 }
@@ -59,12 +59,14 @@ if (isset($_POST['city'])) {
 if (isset($_POST['education'])) {
     $education = implode(",", $_POST['education']);
 }
-
+$current_time=date("Y-m-d h:i:s");
+$lastlogin=date("Y-m-d h:i:s");
 
 // inserting into database
-$sqlinsertquery="INSERT INTO `user_details` (`profile_img`,`name`,`email`,`password_hash`,`gender`,`city`,`education`) VALUES ('$uploadpath','$name','$email','$password_hash','$gender','$city','$education')";
+$sqlinsertquery="INSERT INTO `user_details` (`profile_img`,`name`,`email`,`password_hash`,`gender`,`city`,`education`,`lastlogin`,`created_at`) VALUES ('$uploadpath','$name','$email','$password_hash','$gender','$city','$education','$lastlogin','$current_time')";
 
 if($conn->query($sqlinsertquery)===TRUE){
+    
     echo '<script>alert("Added successfully")</script>';
     header("location:showdata.php");
 }else{
