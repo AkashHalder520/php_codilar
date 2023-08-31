@@ -166,7 +166,7 @@
             <?php
             $selected="";
             $cityf=$data[0]['city'];
-            if(in_array($cityf,$cityarr)){
+            if(in_array($cityf,$cityarr)){//check if its in array
             $selected="selected";
             }
             foreach ($cityarr as $key => $value) {
