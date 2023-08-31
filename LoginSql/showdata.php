@@ -1,5 +1,6 @@
-<?php 
+<?php
 session_start();
+include('nav.php')
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +16,7 @@ session_start();
     <h1>Display page</h1>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a class="btn btn-primary me-md-2" type="button" href="registration.php">Add details</a>
-        <a class="btn btn-danger me-md-2" type="button" href="logout.php">Logout</a>
+        <!-- <a class="btn btn-danger me-md-2" type="button" href="logout.php">Logout</a> -->
     </div>
     <table class="table table-bordered">
         <tr>
@@ -41,12 +42,13 @@ session_start();
             die("Connection failed: " . $conn->connect_error);
         }
 
-
-        // selecting all data except password hash from the table******
-        $email=$_SESSION['email'];
-        if(!$email){
+        //checking the session
+        $email = $_SESSION['email'];
+        if (!$email) {
             header("location:index.php");
         }
+
+        // selecting all data except password hash from the table******
         $getdataquery = "SELECT id,profile_img,name,email,gender,city,education  FROM `user_details`";
         $response = $conn->query("$getdataquery");
         // print_r($response); 
@@ -65,7 +67,7 @@ session_start();
             // print_r($values);
             // echo "</pre>";
         ?>
-            <tr> 
+            <tr>
                 <?php
                 foreach ($values as $key => $valuesx) {
                 ?>
@@ -84,13 +86,13 @@ session_start();
                 <td>
 
                     <a href="updatepage.php?id=<?php echo $values['id'] ?>"><button>update<button></a>
-                    <a  href="deletepage.php?id=<?php echo $values['id'] ?>"><button onclick="return confirm(`Do you want to delete`)">Delete</button></a>
+                    <a href="deletepage.php?id=<?php echo $values['id'] ?>"><button onclick="return confirm(`Do you want to delete`)">Delete</button></a>
                     <!-- <button id="deletebutton">Delete</button> -->
-                    
-                    
+
+
                 </td>
             <?php } ?>
-        </tr>
+            </tr>
     </table>
     <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
