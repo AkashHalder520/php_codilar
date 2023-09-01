@@ -59,8 +59,8 @@ if (isset($_POST['city'])) {
 if (isset($_POST['education'])) {
     $education = implode(",", $_POST['education']);
 }
-$current_time=date("Y-m-d h:i:s");
-$lastlogin=date("Y-m-d h:i:s");
+$current_time=date("Y-m-d h:i:s");//for getting the date of creation 
+$lastlogin=date("Y-m-d h:i:s");// for first time login storing the date 
 
 // inserting into database
 $sqlinsertquery="INSERT INTO `user_details` (`profile_img`,`name`,`email`,`password_hash`,`gender`,`city`,`education`,`lastlogin`,`created_at`) VALUES ('$uploadpath','$name','$email','$password_hash','$gender','$city','$education','$lastlogin','$current_time')";
