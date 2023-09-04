@@ -50,6 +50,9 @@ if (isset($_POST['email'])) { //isset function returns true if the variable exis
 if (isset($_POST['password'])) {
     $password_hash = password_hash($_POST['password'],PASSWORD_DEFAULT) ; // storing the password as hash 
 }
+if (isset($_POST['mobile'])) {
+    $mobile=$_POST['mobile']; 
+}
 if (isset($_POST['gender'])) {
     $gender = $_POST['gender'];
 }
@@ -61,9 +64,9 @@ if (isset($_POST['education'])) {
 }
 $current_time=date("Y-m-d h:i:s");//for getting the date of creation 
 $lastlogin=date("Y-m-d h:i:s");// for first time login storing the date 
-
+$status=0;
 // inserting into database
-$sqlinsertquery="INSERT INTO `user_details` (`profile_img`,`name`,`email`,`password_hash`,`gender`,`city`,`education`,`lastlogin`,`created_at`) VALUES ('$uploadpath','$name','$email','$password_hash','$gender','$city','$education','$lastlogin','$current_time')";
+$sqlinsertquery="INSERT INTO `user_details` (`profile_img`,`name`,`email`,`password_hash`,`mobile`,`gender`,`city`,`education`,`lastlogin`,`created_at`,`status`) VALUES ('$uploadpath','$name','$email','$password_hash','$mobile','$gender','$city','$education','$lastlogin','$current_time','$status')";
 
 if($conn->query($sqlinsertquery)===TRUE){
     

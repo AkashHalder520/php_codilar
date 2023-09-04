@@ -48,14 +48,15 @@ if ($conn->connect_error) {
                 <form class="d-flex" role="search">
                     <?php
                     $email=isset($_SESSION['email']);
-                    $getstatus = "SELECT status FROM `user_details` WHERE email='$email'";
-                    $res = $conn->query($getstatus);
-                    $status = $res->fetch_all(MYSQLI_ASSOC);
-                    if(isset($status[0]['status'])){
-                    echo " <a class='btn btn-Danger' href='logout.php'>Logout</a>  ";
+                    // $getstatus = "SELECT status FROM `user_details` WHERE email='$email'";
+                    // $res = $conn->query($getstatus);
+                    // $status = $res->fetch_all(MYSQLI_ASSOC);
+
+                    if($email==""){
+                    echo " <a class='btn btn-Danger'>Login</a>  ";
                     }
                     else{
-                    echo "<a class='btn btn-Success'>Login</a>";
+                    echo "<a class='btn btn-Success' href='logout.php'>Logout</a>";
                     }
                     ?>
 

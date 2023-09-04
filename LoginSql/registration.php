@@ -38,7 +38,7 @@
 <body>
 
     <h1>Add user details</h1>
-    <form method="post" action='#' enctype="multipart/form-data" id="formq" > <!-- we have to encript the image so we use enctype-->
+    <form method="post" action='./actionpage.php' enctype="multipart/form-data" id="formq" > <!-- we have to encript the image so we use enctype-->
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
@@ -57,6 +57,13 @@
             <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
             <div class="col-sm-10">
                 <input type="password" class="form-control" id="passwordid" name="password">
+                <span id="err"> </span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Mobile</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="mobileid" name="mobile">
                 <span id="err"> </span>
             </div>
         </div>
@@ -127,10 +134,13 @@
 
 
                 </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <!-- <button type="submit" class="btn btn-primary">Sign in</button> -->
+
+                <input type="submit" value="" id="submit-button" style="visibility:hidden"/>
             </div>
 
     </form>
+    <button onClick='senddata()' class="btn btn-primary">Submit</button>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script src="./registrationvalidation.js"></script>
 </body>

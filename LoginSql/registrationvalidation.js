@@ -1,14 +1,22 @@
 console.log("asdfa");
 const form=document.getElementById('formq')
 const uname=document.getElementById('nameid')
-
+const mobile=document.getElementById('mobileid')
 
 const email=document.getElementById('emailid')
 const password= document.getElementById('passwordid')
-form.addEventListener('submit',event=>{
-    event.preventDefault();
-    validation()
-})
+function senddata(){
+console.log("senddata");
+if(validation()){
+    document.getElementById('submit-button').click();
+}
+}
+// form.addEventListener('submit',event=>{
+//     event.preventDefault();
+//     if(validation()){
+//         form.action='actionpage.php';
+//     }
+// })
 
 
 const setError= (element,message)=>{
@@ -21,6 +29,7 @@ function validation(){
    const nameval=uname.value
    const emailval=email.value
    const passwordval=password.value
+   const mobileval=mobile.value
 
     if(nameval === ""){
         setError(uname,"username is required")
@@ -30,5 +39,12 @@ function validation(){
     }
     if(passwordval === ""){
         setError(password,"password is required")
+    }
+    if(mobileval === ""){
+        setError(mobile,"mobile is required")
+    }
+    else 
+    {
+        return true
     }
 }
