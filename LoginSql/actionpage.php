@@ -71,7 +71,7 @@ $sqlinsertquery="INSERT INTO `user_details` (`profile_img`,`name`,`email`,`passw
 if($conn->query($sqlinsertquery)===TRUE){
     
     echo '<script>alert("Added successfully")</script>';
-    header("location:showdata.php");
+    // header("location:showdata.php");
 }else{
     echo "error".$conn->error;
 }

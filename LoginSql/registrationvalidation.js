@@ -8,7 +8,7 @@ const password= document.getElementById('passwordid')
 function senddata(){
 console.log("senddata");
 if(validation()){
-    document.getElementById('submit-button').click();
+    document.getElementById('submit-button').click(); // click function simualates a click lke manual click
 }
 }
 // form.addEventListener('submit',event=>{
