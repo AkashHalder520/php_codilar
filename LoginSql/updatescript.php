@@ -1,30 +1,30 @@
 <?php
+session_start();
+$hostname = "localhost";
+$username = "root";
+$password = "";
+$database = "registration_db";
 
-    $hostname = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "registration_db";
-
-    // Create connection
-    $conn = new mysqli($hostname, $username, $password, $database);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    $id = $_GET['id'];
-    // echo "$id";
+// Create connection
+$conn = new mysqli($hostname, $username, $password, $database);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$id = $_GET['id'];
+// echo "$id";
 
 $email = $password = $gender = $city = $education = $name = "";
-if ($_SERVER["REQUEST_METHOD"] =="POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //<!-- scripts for file upload -->
-$uploadpath="";
-$filename= $_FILES["photo"]["name"]; 
-$tempname= $_FILES["photo"]["tmp_name"];
-$size= $_FILES["photo"]["size"];
+    $uploadpath = "";
+    $filename = $_FILES["photo"]["name"];
+    $tempname = $_FILES["photo"]["tmp_name"];
+    $size = $_FILES["photo"]["size"];
 
-$uploadpath="images/".$filename;
- move_uploaded_file($tempname,$uploadpath);
+    $uploadpath = "images/" . $filename;
+    move_uploaded_file($tempname, $uploadpath);
 
 
     if (isset($_POST["name"])) {
@@ -45,17 +45,25 @@ $uploadpath="images/".$filename;
     if (isset($_POST['education'])) {
         $education = implode(",", $_POST['education']);
     }
+    if (isset($_POST['remarks'])) {
+        $remarks = $_POST['remarks'];
+    }
+    $last_edit_time = date('Y/m/d H:i:s');
     $sqlupdatequery = "UPDATE `user_details` SET profile_img='$uploadpath', name='$name', email='$email', gender='$gender', city='$city', education='$education' WHERE id=$id";
+    //for edit log
+    $sessionemail = $_SESSION['email'];
+    $sqlupdatelog = "INSERT INTO `edit_log` (`edited_By`, `edited_At`, `remarks`) VALUES ('$sessionemail', '$last_edit_time', '$remarks')";
 
-    $updateres=$conn->query("$sqlupdatequery");
-    if($updateres){
-       echo "<script>
+    $updateres = $conn->query("$sqlupdatequery");
+    if ($updateres) {
+        $conn->query($sqlupdatelog);
+        echo "<script>
         alert('updated')
          window.location.href='./showdata.php';
         </script>";
         // 
         //  header('Location:./showdata.php');
-    }else{
+    } else {
         echo "error";
     }
 }

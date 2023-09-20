@@ -49,7 +49,7 @@ include('nav.php')
         }
 
         // selecting all data except password hash from the table******
-        $getdataquery = "SELECT id,profile_img,name,email,gender,city,education  FROM `user_details`";
+        $getdataquery = "SELECT id,profile_img,name,email,gender,city,education  FROM `user_details` WHERE isDelete = 0";
         $response = $conn->query("$getdataquery");
         // print_r($response); 
 

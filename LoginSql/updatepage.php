@@ -1,4 +1,8 @@
-<?php include('nav.php')?>
+<?php 
+include('nav.php') ;
+// session_start();
+// echo $_SESSION['email'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,12 +10,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- script for displaying the image on upload -->
     <script>
-        $(document).ready(function() {
-            $(".upload-image").click(function() {
+        $(document).ready(function () {
+            $(".upload-image").click(function () {
                 $(".form-horizontal").ajaxForm({
                     target: '.preview'
                 }).submit();
@@ -20,13 +25,13 @@
             function imagePreview(fileInput) {
                 if (fileInput.files && fileInput.files[0]) {
                     var fileReader = new FileReader();
-                    fileReader.onload = function(event) {
+                    fileReader.onload = function (event) {
                         $('#preview').html('<img src="' + event.target.result + '" width="200px" height="200px"/>');
                     };
                     fileReader.readAsDataURL(fileInput.files[0]);
                 }
             }
-            $("#image").change(function() {
+            $("#image").change(function () {
                 imagePreview(this);
             });
         });
@@ -60,13 +65,13 @@
     }
     $id = $_GET['id'];
     // echo "$id";
-
+    
     $sqlfetchquery = "SELECT profile_img,name,email,gender,city,education  FROM `user_details` WHERE id=$id";
     $response = $conn->query("$sqlfetchquery");
     // echo "<pre>";
     // print_r($response);
     // echo "<pre>";
-
+    
     //fetch all data at once in associative format
     $data = $response->fetch_all(MYSQLI_ASSOC);
     // echo "<pre>";
@@ -82,9 +87,9 @@
     $educationdata = $data[0]['education'];
     // echo $educationdata . "edication data";
     $eduarr = explode(",", $educationdata); // explode function used to convert array to string
-
+    
     // print_r($eduarr)
-
+    
     ?>
 
     <!-- for automatic select of radio buttons -->
@@ -101,13 +106,15 @@
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputEmail3" name="name" value="<?php echo $data[0]['name']; ?>">
+                <input type="text" class="form-control" id="inputEmail3" name="name"
+                    value="<?php echo $data[0]['name']; ?>">
             </div>
         </div>
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" name="email" value="<?php echo $data[0]['email']; ?> ">
+                <input type="email" class="form-control" id="inputEmail3" name="email"
+                    value="<?php echo $data[0]['email']; ?> ">
             </div>
         </div>
         <!-- <div class="row mb-3">
@@ -163,12 +170,12 @@
         // create array of city
         $cityarr = array('Delhi', 'Mumbai', 'Noida', 'kolkata', 'Hyderabad', 'Siliguri');
         ?>
-        <select name="city" id="" >
+        <select name="city" id="">
             <?php
-            $selected="";
-            $cityf=$data[0]['city'];
-            if(in_array($cityf,$cityarr)){//check if its in array
-            $selected="selected";
+            $selected = "";
+            $cityf = $data[0]['city'];
+            if (in_array($cityf, $cityarr)) { //check if its in array
+                $selected = "selected";
             }
             foreach ($cityarr as $key => $value) {
                 echo "<option $selected>$value</option>";
@@ -184,7 +191,7 @@
                 <!-- we can have multiple ceckbox here also we can use array -->
                 <?php
                 $checkboxarr = array('B.tech', 'M.Tech', 'BCA', 'MCA', 'B.Sc', 'Others')
-                ?>
+                    ?>
                 <div class="form-check">
                     <?php
                     //condition for checked
@@ -194,22 +201,31 @@
                             $checked = 'checked';
                         }
                         echo "<input  type='checkbox' id='educationlable' name='education[]' value=$value $checked>";
-                    ?>
+                        ?>
                         <label>
 
-                        <?php echo "$value";
+                            <?php echo "$value";
                     } ?>
-                        </label>
+                    </label>
 
 
                 </div>
+                <div class="row mb-3">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Remarks</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputEmail3" name="remarks"  required>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
 
     </form>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
 </body>
 
 </body>

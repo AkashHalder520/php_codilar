@@ -14,8 +14,11 @@ if ($conn->connect_error) {
 $id = $_GET['id'];
 echo $id;
 
-$sqldeletequery = "DELETE FROM `user_details`
-    WHERE id = $id";
+// $sqldeletequery = "DELETE FROM `user_details` WHERE id = $id";
+$sqldeletequery="UPDATE user_details
+SET  isDelete = 1
+WHERE id = '$id'";
+
 
 if ($conn->query($sqldeletequery) === TRUE) {
     echo "<script>
