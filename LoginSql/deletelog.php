@@ -13,7 +13,7 @@ include('nav.php')
 </head>
 
 <body>
-    <h1>Display page</h1>
+    <h1>Display log</h1>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a class="btn btn-primary me-md-2" type="button" href="registration.php">Add details</a>
         <!-- <a class="btn btn-danger me-md-2" type="button" href="logout.php">Logout</a> -->
@@ -24,7 +24,7 @@ include('nav.php')
             <th>Photo</th>
             <th>name</th>
             <th>email</th>
-            <th>mobile</th>
+            <th>Mobile</th>
             <th>Gender</th>
             <th>city</th>
             <th>education</th>
@@ -50,7 +50,7 @@ include('nav.php')
         }
 
         // selecting all data except password hash from the table******
-        $getdataquery = "SELECT id,profile_img,name,email,mobile,gender,city,education  FROM `user_details` WHERE isDelete = 0";
+        $getdataquery = "SELECT id,profile_img,name,email,mobile,gender,city,education  FROM `user_details` WHERE isDelete = 1";
         $response = $conn->query("$getdataquery");
         // print_r($response); 
 
@@ -86,9 +86,9 @@ include('nav.php')
                 ?>
                 <td>
 
-                    <a href="updatepage.php?id=<?php echo $values['id'] ?>"><button>update<button></a>
-                    <a href="deletepage.php?id=<?php echo $values['id'] ?>"><button onclick="return confirm(`Do you want to Delete`)">Delete</button></a>
-                    <!-- <button id="deletebutton">Delete</button> -->
+                    
+                    <a href="restore.php?id=<?php echo $values['id'] ?>"><button onclick="return confirm(`Do you want to Restore`)">Restore</button></a>
+                    
 
 
                 </td>

@@ -41,6 +41,8 @@ if ($conn->connect_error) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="showdata.php">Display</a>
+                        <a class="nav-link" href="deletelog.php">DeleteLog</a>
+                        
                     </li>
 
 

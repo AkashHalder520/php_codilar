@@ -210,12 +210,7 @@ include('nav.php') ;
 
 
                 </div>
-                <div class="row mb-3">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Remarks</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputEmail3" name="remarks"  required>
-                    </div>
-                </div>
+                
 
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>

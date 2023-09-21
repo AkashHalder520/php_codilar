@@ -45,24 +45,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['education'])) {
         $education = implode(",", $_POST['education']);
     }
-    if (isset($_POST['remarks'])) {
-        $remarks = $_POST['remarks'];
-    }
     $last_edit_time = date('Y/m/d H:i:s');
-    $sqlupdatequery = "UPDATE `user_details` SET profile_img='$uploadpath', name='$name', email='$email', gender='$gender', city='$city', education='$education' WHERE id=$id";
-    //for edit log
+
+    $newvalue = array("profile_img"=>$uploadpath, "name"=>"$name", "email"=>"$email","gender"=>"$gender","city"=>"$city","education"=>"$education");
+    $sqldatagetquery="SELECT profile_img,name,email,gender,city,education  FROM `user_details` WHERE id=$id";
+    $response=$conn->query("$sqldatagetquery");
+    // echo "$response";
+    $row = $response->fetch_all(MYSQLI_ASSOC);
+    // echo "<pre>";
+    // print_r($row[0]);
+    // print_r($newvalue);
+    // echo "</pre>";
+    $diff=array_diff($row[0],$newvalue);
+    print_r($diff);
     $sessionemail = $_SESSION['email'];
-    $sqlupdatelog = "INSERT INTO `edit_log` (`edited_By`, `edited_At`, `remarks`) VALUES ('$sessionemail', '$last_edit_time', '$remarks')";
+foreach ($diff as $key => $value) {
+    # code...
+    $sqlupdatelog = "INSERT INTO `edit_log` (`edited_By`, `edited_At`,`edited_field`,`edited_value`) VALUES ('$sessionemail', '$last_edit_time','$key','$value')";
+    $conn->query($sqlupdatelog);
+}
+    $sqlupdatequery = "UPDATE `user_details` SET profile_img='$uploadpath', name='$name', email='$email', gender='$gender', city='$city', education='$education' WHERE id=$id";
+    // //for edit log
+    // $sessionemail = $_SESSION['email'];
+
+    // $sqlupdatelog = "INSERT INTO `edit_log` (`edited_By`, `edited_At`) VALUES ('$sessionemail', '$last_edit_time')";
 
     $updateres = $conn->query("$sqlupdatequery");
     if ($updateres) {
-        $conn->query($sqlupdatelog);
+    //     $conn->query($sqlupdatelog);
         echo "<script>
         alert('updated')
          window.location.href='./showdata.php';
         </script>";
-        // 
-        //  header('Location:./showdata.php');
+        
+         header('Location:./showdata.php');
     } else {
         echo "error";
     }
