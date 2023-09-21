@@ -13,11 +13,9 @@ include('nav.php')
 </head>
 
 <body>
-    <h1>Display log</h1>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a class="btn btn-primary me-md-2" type="button" href="registration.php">Add details</a>
-        <!-- <a class="btn btn-danger me-md-2" type="button" href="logout.php">Logout</a> -->
-    </div>
+    <div class="container">
+    <h1>Delete log</h1>
+ 
     <table class="table table-bordered">
         <tr>
             <th>ID</th>
@@ -62,7 +60,7 @@ include('nav.php')
             // echo "<pre>";
             // print_r($row);
             // echo "</pre>";
-        }
+        
         foreach ($row as $key => $values) {
             // echo "<pre>";
             // print_r($values);
@@ -87,15 +85,18 @@ include('nav.php')
                 <td>
 
                     
-                    <a href="restore.php?id=<?php echo $values['id'] ?>"><button onclick="return confirm(`Do you want to Restore`)">Restore</button></a>
+                    <a href="restore.php?id=<?php echo $values['id'] ?>"><button class="btn btn-primary" onclick="return confirm(`Do you want to Restore`)">Restore</button></a>
                     
 
 
                 </td>
             <?php } ?>
             </tr>
+            
     </table>
+    <?php }else{echo '<h3>no data </h3>';} ?>
     <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    </div>
 </body>
 
 </html>

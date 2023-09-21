@@ -36,6 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //    if (isset($_POST['password'])) {
     //        $password_hash = password_hash($_POST['password'],PASSWORD_DEFAULT) ; // storing the password as hash 
     //    }
+    if (isset($_POST["mobile"])) {
+        $mobile = $_POST['mobile'];
+    }
     if (isset($_POST['gender'])) {
         $gender = $_POST['gender'];
     }
@@ -47,8 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $last_edit_time = date('Y/m/d H:i:s');
 
-    $newvalue = array("profile_img"=>$uploadpath, "name"=>"$name", "email"=>"$email","gender"=>"$gender","city"=>"$city","education"=>"$education");
-    $sqldatagetquery="SELECT profile_img,name,email,gender,city,education  FROM `user_details` WHERE id=$id";
+    $newvalue = array("profile_img"=>$uploadpath, "name"=>"$name", "email"=>"$email","mobile"=>"$mobile","gender"=>"$gender","city"=>"$city","education"=>"$education");
+    $sqldatagetquery="SELECT profile_img,name,email,mobile,gender,city,education  FROM `user_details` WHERE id=$id";
     $response=$conn->query("$sqldatagetquery");
     // echo "$response";
     $row = $response->fetch_all(MYSQLI_ASSOC);
@@ -59,12 +62,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $diff=array_diff($row[0],$newvalue);
     print_r($diff);
     $sessionemail = $_SESSION['email'];
-foreach ($diff as $key => $value) {
+    $diffkey=array_keys($diff);
+    $diffval=array_values($diff);
+    $k=implode(",",$diffkey);
+    $s=implode(",",$diffval);
+
+    // foreach ($diff as $key => $value) {
     # code...
-    $sqlupdatelog = "INSERT INTO `edit_log` (`edited_By`, `edited_At`,`edited_field`,`edited_value`) VALUES ('$sessionemail', '$last_edit_time','$key','$value')";
+    $sqlupdatelog = "INSERT INTO `edit_log` (`edited_By`, `edited_At`,`edited_field`,`edited_value`) VALUES ('$sessionemail', '$last_edit_time','$k','$s')";
     $conn->query($sqlupdatelog);
-}
-    $sqlupdatequery = "UPDATE `user_details` SET profile_img='$uploadpath', name='$name', email='$email', gender='$gender', city='$city', education='$education' WHERE id=$id";
+// }
+    $sqlupdatequery = "UPDATE `user_details` SET profile_img='$uploadpath', name='$name', email='$email',mobile='$mobile',gender='$gender', city='$city', education='$education' WHERE id=$id";
     // //for edit log
     // $sessionemail = $_SESSION['email'];
 
