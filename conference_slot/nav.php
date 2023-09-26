@@ -69,7 +69,7 @@ if ($conn->connect_error) {
                     // }
 
                     if (!isset($_SESSION['email'])) {
-                        echo '<a class="btn btn-success">Login</a>';
+                        echo '<a class="btn btn-success" href="index.php">Login</a>';
                     } else {
                         echo '<a class="btn btn-danger" href="logout.php">Logout</a>';
                     }

@@ -13,6 +13,14 @@ include('nav.php')
 
 
 </head>
+<style>
+    .errormsg{
+    color: red;
+    font-size: 14px;
+    font-weight: bolder;
+    /* margin-top: 10px; */
+}
+</style>
 
 <body>
     <div class="container">
@@ -23,7 +31,7 @@ include('nav.php')
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="nameid" name="name" oninput="namevalid()">
-                    <span id="nameerr" id="err"> </span>
+                    <span id="nameerr" id="err" class="errormsg"> </span>
                 </div>
             </div>
             <div class="row mb-3">
@@ -53,7 +61,7 @@ include('nav.php')
 
             <!-- <button type="submit" class="btn btn-primary">Sign in</button> -->
 
-            <!-- <input type="submit" value="" id="submit-button" style="visibility:hidden" /> -->
+            <input type="submit" value="" id="submit-button" style="visibility:hidden" />
 
         </form>
         <button onClick='senddata()' class="btn btn-primary">Submit</button>

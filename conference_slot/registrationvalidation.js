@@ -1,4 +1,3 @@
-console.log("asdfa");
 const form=document.getElementById('formq')
 const uname=document.getElementById('nameid')
 const mobile=document.getElementById('mobileid')
@@ -79,18 +78,19 @@ const emailvalid = () => {
   };
 
   function senddata() {
-    
     if (Object.keys(isvalid).length === 0) {
-      alert("please enter data");
-    } else if (isvalid.mobile == false) {
-      alert("enter correct contact number");
+      let ass=document.querySelectorAll('.errormsg')
+      ass.forEach((item)=>{
+        item.innerHTML="enter the values"
+      })
+    } else if (isvalid.contact_number == false) {
+      // alert("enter correct contact number");
     } else if (isvalid.password == false) {
-      alert("enter correct password");
+      // alert("enter correct password");
     } else if (isvalid.email == false) {
-      alert("enter correct email");
-    } 
-     else if (isvalid.name == false) {
-      alert("enter the correct name");
+      // alert("enter correct email");
+    } else if (isvalid.uname == false) {
+      // alert("enter the correct last name");
     } else {
       alert("success");
       // document.getElementById('submit-button').click();
