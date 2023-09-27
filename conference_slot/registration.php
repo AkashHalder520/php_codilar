@@ -75,17 +75,6 @@ include('nav.php')
     <script src="./registrationvalidation.js"></script>
 
 </body>
-<!-- <script>
 
-function validation(){
-    const name=document.getElementById('name').value;
-if (name =="") {
-    document.getElementById('nameerr').innerText="please write a user name";
-}else
-{
-    document.getElementById('nameerr').innerText="";
-}
-}
-    </script> -->
 
 </html>

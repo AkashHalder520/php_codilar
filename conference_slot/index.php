@@ -13,13 +13,14 @@ include('nav.php');
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <style>
-    .errormsg{
+  .errormsg {
     color: red;
     font-size: 14px;
     font-weight: bolder;
     /* margin-top: 10px; */
-}
+  }
 </style>
+
 <body>
   <form class="container" method="post">
     <div class="row mb-3">
@@ -28,17 +29,19 @@ include('nav.php');
         <input type="text" class="form-control" id="emailid" name="email" oninput="emailvalid()">
         <span id="emailerr" class="errormsg"> </span>
       </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="passwordid" name="password" oninput="passwordvalid()">
+        <span id="passworderr" class="errormsg"> </span>
       </div>
-      <div class="row mb-3">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" id="passwordid" name="password" oninput="passwordvalid()">
-          <span id="passworderr" class="errormsg"> </span>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary" style="visibility:hidden" >Submit</button>
+    </div>
+    <button type="submit" class="btn btn-primary" id="submit-button" style="visibility:hidden">Submit</button>
   </form>
-  <button onClick='senddata()' class="btn btn-primary">Submit</button>
+  <div class="text-center"> <!-- Center-align contents -->
+    <button onClick='senddata()' class="btn btn-primary">Submit</button>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
     crossorigin="anonymous"></script>
@@ -51,7 +54,7 @@ include('nav.php');
 $hostname = "localhost";
 $username = "root";
 $password = "";
-$database = "registration_db";
+$database = "conference_slot";
 
 // Create connection
 $conn = new mysqli($hostname, $username, $password, $database);
@@ -60,48 +63,46 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-//  $statusquery="SELECT status FROM `user_details` WHERE email='akashhalder520@gmail.com'";
+
 $email = $password = "";
 if (isset($_POST['email'])) {
-  # code...
   $email = $_POST['email'];
   echo $email;
 }
 
 if (isset($_POST['password'])) {
-  # code...
   $password = $_POST['password'];
 }
 // if(password_verify($password, $hashed_password)) //for verifing hasg password
 $loginquery = "SELECT * FROM user_details WHERE email='$email'";
 $response = $conn->query($loginquery);
-$islogin = false;
 if ($response === false) {
   // Handle the query error
   echo "Query failed: " . $conn->error;
 } else {
   $rows = $response->fetch_all(MYSQLI_ASSOC);
-  echo "<pre>";
-  // print_r($rows[0]['password_hash']);
-
-  echo "</pre>";
+  // echo "<pre>";
+  // print_r($rows[0]['name']);
+  $name=$rows[0]['name']?? '';
+  // echo "</pre>";
 }
 if (empty($rows)) {
-  // echo "<script>alert('Please enter correct  email or password ')</script>";
+   echo "<script>alert('Please enter correct  email or password ')</script>";
   die();
 }
-if (!password_verify($password, $rows[0]['password_hash'])) {
+if (!password_verify($password, $rows[0]['password'])) {
   echo "<script>alert('wrong password')</script>";
 } else {
   //creating the session 
   $_SESSION['email'] = $email;
+  $_SESSION['name']=$name;
 
   $lastdatetime = "UPDATE `user_details` SET lastlogin = now() WHERE email = '$email'";
   $response = $conn->query($lastdatetime);
   $status = "UPDATE `user_details` SET status = '1' WHERE email = '$email'";
   $ress = $conn->query($status);
   // echo $response;
-  header("location:showdata.php");
+  header("location:table.php");
 }
 
 

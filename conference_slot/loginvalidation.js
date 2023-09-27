@@ -46,18 +46,19 @@ const passwordvalid = () => {
   }
 };
 
-function senddata() {
+function senddata(event) {
+  // event.preventDefault();
   if (Object.keys(isvalid).length === 0) {
     let ass = document.querySelectorAll(".errormsg");
     ass.forEach((item) => {
       item.innerHTML = "enter the values";
     });
   } else if (isvalid.password == false) {
-    // alert("enter correct password");
+    alert("enter correct password");
   } else if (isvalid.email == false) {
-    // alert("enter correct email");
+    alert("enter correct email");
   } else {
-    alert("success");
-    // document.getElementById('submit-button').click();
+    // alert("success");
+    document.getElementById('submit-button').click();
   }
 }

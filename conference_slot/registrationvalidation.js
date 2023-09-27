@@ -1,7 +1,6 @@
 const form=document.getElementById('formq')
 const uname=document.getElementById('nameid')
 const mobile=document.getElementById('mobileid')
-
 const email=document.getElementById('emailid')
 const password= document.getElementById('passwordid')
 
@@ -92,7 +91,7 @@ const emailvalid = () => {
     } else if (isvalid.uname == false) {
       // alert("enter the correct last name");
     } else {
-      alert("success");
-      // document.getElementById('submit-button').click();
+      // alert("success");
+      document.getElementById('submit-button').click();
     }
   }

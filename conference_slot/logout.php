@@ -2,7 +2,7 @@
 $hostname = "localhost";
 $username = "root";
 $password = "";
-$database = "registration_db";
+$database = "conference_slot";
 
 session_start();
 // Create connection
