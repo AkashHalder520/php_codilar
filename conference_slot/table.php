@@ -170,7 +170,7 @@ if (!$email) {
                         <input type="hidden" name="date" id="modalDateInput">
                         <input type="hidden" name="day" id="modalDayInput">
                         <input type="hidden" name="time" id="modalTimeInput">
-                        Task:<input type="text" name="description" id="description">
+                        Task:<input type="text" name="description" id="description" required>
 
                         <!-- Add other form fields if needed -->
                     </form>
