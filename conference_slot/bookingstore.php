@@ -28,7 +28,14 @@ $sql = "INSERT INTO booking_slot (username,email,day, slot_time, date, descripti
 
 if ($mysqli->query($sql) === TRUE) {
     echo "Data inserted successfully into the 'booking_slot' table.";
-    header('Location: table.php');
+//     header('Location: table.php');
+//    echo' <script>
+                
+//                  setTimeout(function() {
+//                     document.getElementById("selectdatebtn").click();
+//                 }, 1000)
+//                   </script>';
+
 } else {
     echo "Error: " . $mysqli->error;
 }

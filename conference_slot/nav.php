@@ -68,7 +68,7 @@ if ($conn->connect_error) {
                     //     echo "<a class='btn btn-Success' href='logout.php'>Logout</a>";
                     // }
                     $name=$_SESSION['name']?? '';
-                    echo "$name";
+                    echo "<h4 style='margin: auto;margin-right: 10px;'>{$name}</h4>";
 
                     if (!isset($_SESSION['email'])) {
                         echo '<a class="btn btn-success" href="index.php">Login</a>';
