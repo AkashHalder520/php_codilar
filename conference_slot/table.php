@@ -9,6 +9,7 @@ if (!$emails) {
 }
 echo "<script>";
 echo "var jsSessionEmail = '" . $emails . "';"; // storing session in js ..
+
 echo "</script>"
     ?>
 
@@ -141,30 +142,31 @@ echo "</script>"
 
                         // Check if the date is before the current date
                         $isDateBeforeCurrent = strtotime($date) < strtotime($currentDate);
-                    
-                
-                        preg_match('/(\d+)-(\d+) (AM|PM)/', $time_slot, $matches);
+
                         // Extract the hours and AM/PM from the regular expression matches
+                        preg_match('/(\d+)-(\d+) (AM|PM)/', $time_slot, $matches);
                         $start_hour = $matches[1];
                         // $end_hour = $matches[2];
                         $ampm = $matches[3];
-                        $timex=$start_hour.":00"." $ampm";
+                        $timex = $start_hour . ":00" . " $ampm";
                         // echo $timex;
+                
                         $convertedTimeSlot = date("H", strtotime($timex)); // converting the starting hr to 24hrs format
                         // echo $convertedTimeSlot."<br>";    
-
-
-
-
                         // Check if the time slot is before the current time
+                
                         $isTimeBeforeCurrent = false;
-                        if (strtotime($date) == strtotime($currentDate)) {
-                            $isTimeBeforeCurrent = $convertedTimeSlot < date("H");
+                        if (strtotime($date) == strtotime($currentDate)) { // if the current date and the date is equal then check the time
+                            $isTimeBeforeCurrent = $convertedTimeSlot < date("H"); // returns a boolean value 
+                
                         }
-                        echo $isTimeBeforeCurrent ."sd".$isDateBeforeCurrent."<br>";
-
+                        echo $isTimeBeforeCurrent . "sd" . $isDateBeforeCurrent . "<br>";
+                        echo "<script>var flag=0 </script>"; // setting the js flag variable to zero
                         if ($isDateBeforeCurrent || $isTimeBeforeCurrent) {
-
+                            // setting flag to 1
+                            echo '<script> 
+                                    flag=1 
+                                 </script>';
                             $sql = "SELECT * FROM booking_slot WHERE day = '$day' AND slot_time = '$time_slot' AND date = '$date'";
                             $result = $mysqli->query($sql);
 
@@ -179,6 +181,7 @@ echo "</script>"
                                 // Data doesn't exist, show "Book" button
                                 echo "<td><button class='btn btn-primary book-button' disabled >Book</button></td>";
                             }
+
                         } else {
 
                             $sql = "SELECT * FROM booking_slot WHERE day = '$day' AND slot_time = '$time_slot' AND date = '$date'";
@@ -216,13 +219,12 @@ echo "</script>"
                         <!-- Content will be dynamically inserted here -->
                     </div>
                     <!-- Create a form with hidden inputs -->
+                    <!-- giving id to form for taking the data in js -->
                     <form id="bookingForm" method="post" action="bookingstore.php">
                         <input type="hidden" name="date" id="modalDateInput">
                         <input type="hidden" name="day" id="modalDayInput">
                         <input type="hidden" name="time" id="modalTimeInput">
                         Task:<input type="text" name="description" id="description" required>
-
-                        <!-- Add other form fields if needed -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -246,12 +248,10 @@ echo "</script>"
                     <div id="modalContent2">
                         <!-- Content will be dynamically inserted here -->
                     </div>
-
-
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" id="modal2">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" id="deletebtn" class="btn btn-danger">Delete</button>
+                    <!-- <button type="submit" id="deletebtn" class="btn btn-danger">Delete</button> we have to create the button via js for security reason-->
                 </div>
             </div>
         </div>
@@ -294,7 +294,7 @@ echo "</script>"
 
                     $("#submitBtn").click(function () {
                         // Get form data
-                        var formData = $("#bookingForm").serialize();
+                        var formData = $("#bookingForm").serialize();//serialization is commonly used when sending data between a client (e.g., a web browser) and a server,
 
                         // Send a POST request using AJAX
                         $.ajax({
@@ -351,15 +351,30 @@ echo "</script>"
                     const myModal2 = new bootstrap.Modal(document.getElementById("myModal2"));
                     myModal2.show();
 
+                    // Create a new button element
+                    var delButton = document.createElement("button");
 
-                    const deletebtn = document.getElementById("deletebtn");
-                    if (email != jsSessionEmail ) {
-                        deletebtn.style.display = 'none'
-                    } else {
-                        deletebtn.style.display = 'block'
+                    // Set button attributes 
+                    delButton.setAttribute("type", "submit");
+                    delButton.setAttribute("id", "deletebtn");
+                    delButton.setAttribute("class", "btn btn-danger");
+
+                    // Set button text
+                    delButton.textContent = "Delete";
+
+                    console.log("flag:", flag);
+
+                    if (email == jsSessionEmail && flag == 0) { //check if flag 0 means its not beyound current date and time 
+
+                        var parentElement = document.getElementById('modal2')
+                        parentElement.appendChild(delButton);
                     }
 
+
+
+
                     deletebtn.addEventListener("click", function () {
+
                         $.ajax({
                             type: "POST",
                             url: "deleteslot.php",
@@ -370,19 +385,17 @@ echo "</script>"
                                 description: description
                             },
                             success: function (response) {
-                                // Handle the response from the PHP page here
                                 console.log(response);
                                 myModal2.hide()
-                                // Redirect to "table.php"
                                 window.location.href = "table.php";
                                 const submitbtn = document.getElementById('selectdatebtn')
                                 submitbtn.click();
-
                             },
                             error: function (error) {
                                 console.error(error);
                             }
                         });
+
                     })
 
 

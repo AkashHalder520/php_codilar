@@ -87,7 +87,7 @@ if ($response === false) {
   // echo "</pre>";
 }
 if (empty($rows)) {
-   echo "<script>alert('Please enter correct  email or password ')</script>";
+  //  echo "<script>alert('Please enter correct  email or password ')</script>";
   die();
 }
 if (!password_verify($password, $rows[0]['password'])) {
