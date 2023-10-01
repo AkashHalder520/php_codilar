@@ -19,9 +19,7 @@ echo "</script>"
 
 <head>
     <title>Time Table</title>
-    <!-- Include Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+   
 </head>
 
 <body>
@@ -45,16 +43,18 @@ echo "</script>"
         }
         ?>
         <!-- getting the input date -->
-        <form method="post" action="">
-            <label for="dateInput">Select a Date:</label>
-            <input type="date" id="dateInput" name="selectedDate"
+        <form method="post" action="" class="mt-4">
+        
+            <label for="dateInput" class="ms- -70px">Select a Date:</label>
+            <input type="date" id="dateInput" name="selectedDate" class="form-control d-inline-block w-auto "
                 value="<?php echo isset($_SESSION['selectedDate']) ? $_SESSION['selectedDate'] : ''; ?>">
-            <input type="submit" value="Submit" id="selectdatebtn">
+        
+            <input type="submit" value="Submit" class="btn btn-primary" id="selectdatebtn">
         </form>
 
 
         <?php
-        echo "<h3>You selected the date: " . $selectedDate . "</h3><br>";
+        echo "<h3 class='mt-4'>You selected the date: " . $selectedDate . "</h3><br>";
         echo "<h4>You selected the day: " . $dayOfWeek . "</h4>";
         ?>
 
@@ -160,7 +160,9 @@ echo "</script>"
                             $isTimeBeforeCurrent = $convertedTimeSlot < date("H"); // returns a boolean value 
                 
                         }
-                        echo $isTimeBeforeCurrent . "sd" . $isDateBeforeCurrent . "<br>";
+                        
+                        // echo $isTimeBeforeCurrent . "sd" . $isDateBeforeCurrent . "<br>"; for checking
+
                         echo "<script>var flag=0 </script>"; // setting the js flag variable to zero
                         if ($isDateBeforeCurrent || $isTimeBeforeCurrent) {
                             // setting flag to 1
@@ -251,15 +253,15 @@ echo "</script>"
                 </div>
                 <div class="modal-footer" id="modal2">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <!-- <button type="submit" id="deletebtn" class="btn btn-danger">Delete</button> we have to create the button via js for security reason-->
+                    <!-- we have to create the delete button via js for security reason-->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Include Bootstrap JS (Optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <!-- Include jquerycdn -->
+    
+    <script src="jquery.js"></script>
 
 
     <script>
