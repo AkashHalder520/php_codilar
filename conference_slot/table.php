@@ -61,6 +61,7 @@ echo "</script>"
         echo "<h4>You selected the day: " . $dayOfWeek . "</h4>";
     }
         ?>
+        
         <div id="tableshow">
             <table id="data-table" class="table table-bordered">
                 <thead>
