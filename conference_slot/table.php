@@ -19,7 +19,7 @@ echo "</script>"
 
 <head>
     <title>Time Table</title>
-   
+
 </head>
 
 <body>
@@ -44,169 +44,171 @@ echo "</script>"
         ?>
         <!-- getting the input date -->
         <form method="post" action="" class="mt-4">
-        
+
             <label for="dateInput" class="ms- -70px">Select a Date:</label>
             <input type="date" id="dateInput" name="selectedDate" class="form-control d-inline-block w-auto "
                 value="<?php echo isset($_SESSION['selectedDate']) ? $_SESSION['selectedDate'] : ''; ?>">
-        
+
             <input type="submit" value="Submit" class="btn btn-primary" id="selectdatebtn">
         </form>
 
 
         <?php
+
+
+    if($selectedDate!=''){
         echo "<h3 class='mt-4'>You selected the date: " . $selectedDate . "</h3><br>";
         echo "<h4>You selected the day: " . $dayOfWeek . "</h4>";
+    }
         ?>
-
-        <table id="data-table" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Time Slot</th>
-                    <?php
-                    $datearr = '';
-                    //calculating the whole weeks dates based in the selected dates
-                    if ($dayOfWeek == 'Monday') {
-                        $datearr = array(date("Y-m-d", strtotime($selectedDate)), date("Y-m-d", strtotime($selectedDate . "+1 day")), date("Y-m-d", strtotime($selectedDate . "+2 days")), date("Y-m-d", strtotime($selectedDate . "+3 days")), date("Y-m-d", strtotime($selectedDate . "+4 days")));
-                    }
-                    if ($dayOfWeek == 'Tuesday') {
-                        $datearr = array(date("Y-m-d", strtotime($selectedDate . "-1 day")), date("Y-m-d", strtotime($selectedDate)), date("Y-m-d", strtotime($selectedDate . "+1 days")), date("Y-m-d", strtotime($selectedDate . "+2 days")), date("Y-m-d", strtotime($selectedDate . "+3 days")));
-                    }
-                    if ($dayOfWeek == 'Wednesday') {
-                        $datearr = array(date("Y-m-d", strtotime($selectedDate . "-2 day")), date("Y-m-d", strtotime($selectedDate . "-1 day")), date("Y-m-d", strtotime($selectedDate)), date("Y-m-d", strtotime($selectedDate . "+1 days")), date("Y-m-d", strtotime($selectedDate . "+2 days")));
-                    }
-                    if ($dayOfWeek == 'Thursday') {
-                        $datearr = array(date("Y-m-d", strtotime($selectedDate . "-3 day")), date("Y-m-d", strtotime($selectedDate . "-2 day")), date("Y-m-d", strtotime($selectedDate . "-1 day")), date("Y-m-d", strtotime($selectedDate)), date("Y-m-d", strtotime($selectedDate . "+1 days")));
-                    }
-                    if ($dayOfWeek == 'Friday') {
-                        $datearr = array(date("Y-m-d", strtotime($selectedDate . "-4 days")), date("Y-m-d", strtotime($selectedDate . "-3 day")), date("Y-m-d", strtotime($selectedDate . "-2 days")), date("Y-m-d", strtotime($selectedDate . "-1 days")), date("Y-m-d", strtotime($selectedDate)));
-                    }
-
-                    // print_r($datearr);
-                    // $dayarr = array(date("Y-m-d"), date("Y-m-d", strtotime("+1 day")), date("Y-m-d", strtotime("+2 days")), date("Y-m-d", strtotime("+3 days")), date("Y-m-d", strtotime("+4 days")));
-                    ?>
-
-                    <!--  Displaying the days with date -->
-                    <?php
-                    $dayarr = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday');
-                    $numDates = count($dayarr);
-
-                    for ($i = 0; $i < $numDates; $i++) {
-                        if (!$datearr) {
-                            echo "<th>$dayarr[$i]</th>";
-                        } else {
-                            echo "<th>$dayarr[$i]$datearr[$i]</th>";
+        <div id="tableshow">
+            <table id="data-table" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Time Slot</th>
+                        <?php
+                        $datearr = '';
+                        //calculating the whole weeks dates based in the selected dates
+                        if ($dayOfWeek == 'Monday') {
+                            $datearr = array(date("Y-m-d", strtotime($selectedDate)), date("Y-m-d", strtotime($selectedDate . "+1 day")), date("Y-m-d", strtotime($selectedDate . "+2 days")), date("Y-m-d", strtotime($selectedDate . "+3 days")), date("Y-m-d", strtotime($selectedDate . "+4 days")));
                         }
-                    }
-                    ?>
-
-                </tr>
-            </thead>
-            <tbody>
-
-
-                <?php
-                // Database credentials
-                $host = 'localhost'; // Replace with your database host
-                $dbname = 'conference_slot'; // Replace with your database name
-                $username = "root";
-                $password = "";
-
-                // Create a MySQLi connection
-                $mysqli = new mysqli($host, $username, $password, $dbname);
-
-                // Check the connection
-                if ($mysqli->connect_error) {
-                    die("Connection failed: " . $mysqli->connect_error);
-                }
-
-
-                // $sql = "SELECT * FROM booking_slot";
-                // $result = $mysqli->query($sql);
-                // $rows = $result->fetch_all(MYSQLI_ASSOC);
-                // echo "<pre>";
-                // print_r($rows);
-                // echo "</pre>";
-                
-                $time_slots = array('10-11 AM', '11-12 AM', '12-01 PM', '02-03 PM', '03-04 PM', '04-05 PM', '05-06 PM', '06-07 PM');
-
-                foreach ($time_slots as $time_slot) {
-                    echo "<tr>";
-                    echo "<td>$time_slot</td>";
-                    // $currentDay = date('l');
-                    // $Dayindex = array_search($dayOfWeek, $dayarr);
-                    // if($Dayindex==0){
-                
-                    for ($i = 0; $i < count($dayarr); $i++) {
-                        $day = $dayarr[$i];
-                        $date = $datearr[$i] ?? '';
-
-                        // Check if the date is before the current date
-                        $isDateBeforeCurrent = strtotime($date) < strtotime($currentDate);
-
-                        // Extract the hours and AM/PM from the regular expression matches
-                        preg_match('/(\d+)-(\d+) (AM|PM)/', $time_slot, $matches);
-                        $start_hour = $matches[1];
-                        // $end_hour = $matches[2];
-                        $ampm = $matches[3];
-                        $timex = $start_hour . ":00" . " $ampm";
-                        // echo $timex;
-                
-                        $convertedTimeSlot = date("H", strtotime($timex)); // converting the starting hr to 24hrs format
-                        // echo $convertedTimeSlot."<br>";    
-                        // Check if the time slot is before the current time
-                
-                        $isTimeBeforeCurrent = false;
-                        if (strtotime($date) == strtotime($currentDate)) { // if the current date and the date is equal then check the time
-                            $isTimeBeforeCurrent = $convertedTimeSlot < date("H"); // returns a boolean value 
-                
+                        if ($dayOfWeek == 'Tuesday') {
+                            $datearr = array(date("Y-m-d", strtotime($selectedDate . "-1 day")), date("Y-m-d", strtotime($selectedDate)), date("Y-m-d", strtotime($selectedDate . "+1 days")), date("Y-m-d", strtotime($selectedDate . "+2 days")), date("Y-m-d", strtotime($selectedDate . "+3 days")));
                         }
-                        
-                        // echo $isTimeBeforeCurrent . "sd" . $isDateBeforeCurrent . "<br>"; for checking
+                        if ($dayOfWeek == 'Wednesday') {
+                            $datearr = array(date("Y-m-d", strtotime($selectedDate . "-2 day")), date("Y-m-d", strtotime($selectedDate . "-1 day")), date("Y-m-d", strtotime($selectedDate)), date("Y-m-d", strtotime($selectedDate . "+1 days")), date("Y-m-d", strtotime($selectedDate . "+2 days")));
+                        }
+                        if ($dayOfWeek == 'Thursday') {
+                            $datearr = array(date("Y-m-d", strtotime($selectedDate . "-3 day")), date("Y-m-d", strtotime($selectedDate . "-2 day")), date("Y-m-d", strtotime($selectedDate . "-1 day")), date("Y-m-d", strtotime($selectedDate)), date("Y-m-d", strtotime($selectedDate . "+1 days")));
+                        }
+                        if ($dayOfWeek == 'Friday') {
+                            $datearr = array(date("Y-m-d", strtotime($selectedDate . "-4 days")), date("Y-m-d", strtotime($selectedDate . "-3 day")), date("Y-m-d", strtotime($selectedDate . "-2 days")), date("Y-m-d", strtotime($selectedDate . "-1 days")), date("Y-m-d", strtotime($selectedDate)));
+                        }
 
-                        echo "<script>var flag=0 </script>"; // setting the js flag variable to zero
-                        if ($isDateBeforeCurrent || $isTimeBeforeCurrent) {
-                            // setting flag to 1
-                            echo '<script> 
-                                    flag=1 
-                                 </script>';
-                            $sql = "SELECT * FROM booking_slot WHERE day = '$day' AND slot_time = '$time_slot' AND date = '$date'";
-                            $result = $mysqli->query($sql);
+                        // print_r($datearr);
+                        // $dayarr = array(date("Y-m-d"), date("Y-m-d", strtotime("+1 day")), date("Y-m-d", strtotime("+2 days")), date("Y-m-d", strtotime("+3 days")), date("Y-m-d", strtotime("+4 days")));
+                        ?>
 
-                            if ($result->num_rows > 0) {
-                                // Data exists, show "View" button
-                                $rows = $result->fetch_all(MYSQLI_ASSOC);
-                                $description = $rows[0]['description'];
-                                $name = $rows[0]['username'];
-                                $email = $rows[0]['email'];
-                                echo "<td><button class='btn btn-danger view-button' data-date='$date' data-day='$day' data-time='$time_slot'  date-description='$description' data-name='$name' data-email='$email'>Booked</button></td>";
+                        <!--  Displaying the days with date -->
+                        <?php
+                        $dayarr = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday');
+                        $numDates = count($dayarr);
+
+                        for ($i = 0; $i < $numDates; $i++) {
+                            if (!$datearr) {
+                                echo "<th>$dayarr[$i]</th>";
                             } else {
-                                // Data doesn't exist, show "Book" button
-                                echo "<td><button class='btn btn-primary book-button' disabled >Book</button></td>";
-                            }
-
-                        } else {
-
-                            $sql = "SELECT * FROM booking_slot WHERE day = '$day' AND slot_time = '$time_slot' AND date = '$date'";
-                            $result = $mysqli->query($sql);
-
-                            if ($result->num_rows > 0) {
-                                // Data exists, show "View" button
-                                $rows = $result->fetch_all(MYSQLI_ASSOC);
-                                $description = $rows[0]['description'];
-                                $name = $rows[0]['username'];
-                                $email = $rows[0]['email'];
-                                echo "<td><button class='btn btn-danger view-button' data-date='$date' data-day='$day' data-time='$time_slot'  date-description='$description' data-name='$name' data-email='$email'>Booked</button></td>";
-                            } else {
-                                // Data doesn't exist, show "Book" button
-                                echo "<td><button class='btn btn-primary book-button' data-date='$date' data-day='$day' data-time='$time_slot' data-name='$names' data-email='$emails' >Book</button></td>";
+                                echo "<th>$dayarr[$i]$datearr[$i]</th>";
                             }
                         }
+                        ?>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <?php
+                    // Database credentials
+                    $host = 'localhost'; // Replace with your database host
+                    $dbname = 'conference_slot'; // Replace with your database name
+                    $username = "root";
+                    $password = "";
+
+                    // Create a MySQLi connection
+                    $mysqli = new mysqli($host, $username, $password, $dbname);
+
+                    // Check the connection
+                    if ($mysqli->connect_error) {
+                        die("Connection failed: " . $mysqli->connect_error);
                     }
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
-        </table>
+
+
+                    // $sql = "SELECT * FROM booking_slot";
+                    // $result = $mysqli->query($sql);
+                    // $rows = $result->fetch_all(MYSQLI_ASSOC);
+                    // echo "<pre>";
+                    // print_r($rows);
+                    // echo "</pre>";
+                    
+                    $time_slots = array('10-11 AM', '11-12 AM', '12-01 PM', '02-03 PM', '03-04 PM', '04-05 PM', '05-06 PM', '06-07 PM');
+
+                    foreach ($time_slots as $time_slot) {
+                        echo "<tr>";
+                        echo "<td>$time_slot</td>";
+                        // $currentDay = date('l');
+                        // $Dayindex = array_search($dayOfWeek, $dayarr);
+                        // if($Dayindex==0){
+                    
+                        for ($i = 0; $i < count($dayarr); $i++) {
+                            $day = $dayarr[$i];
+                            $date = $datearr[$i] ?? '';
+
+                            // Check if the date is before the current date
+                            $isDateBeforeCurrent = strtotime($date) < strtotime($currentDate);
+
+                            // Extract the hours and AM/PM from the regular expression matches
+                            preg_match('/(\d+)-(\d+) (AM|PM)/', $time_slot, $matches);
+                            $start_hour = $matches[1];
+                            // $end_hour = $matches[2];
+                            $ampm = $matches[3];
+                            $timex = $start_hour . ":00" . " $ampm";
+                            // echo $timex;
+                    
+                            $convertedTimeSlot = date("H", strtotime($timex)); // converting the starting hr to 24hrs format
+                            // echo $convertedTimeSlot."<br>";    
+                            // Check if the time slot is before the current time
+                    
+                            $isTimeBeforeCurrent = false;
+                            if (strtotime($date) == strtotime($currentDate)) { // if the current date and the date is equal then check the time
+                                $isTimeBeforeCurrent = $convertedTimeSlot < date("H"); // returns a boolean value 
+                    
+                            }
+
+
+                            if ($isDateBeforeCurrent || $isTimeBeforeCurrent) {
+
+
+                                $sql = "SELECT * FROM booking_slot WHERE day = '$day' AND slot_time = '$time_slot' AND date = '$date'";
+                                $result = $mysqli->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // Data exists, show "View" button
+                                    $rows = $result->fetch_all(MYSQLI_ASSOC);
+                                    $description = $rows[0]['description'];
+                                    $name = $rows[0]['username'];
+                                    $email = $rows[0]['email'];
+                                    echo "<td><button class='btn btn-danger view-button' data-date='$date' data-day='$day' data-time='$time_slot'  date-description='$description' data-name='$name' data-email='$email'>Booked</button></td>";
+                                } else {
+                                    // Data doesn't exist, show "Book" button
+                                    echo "<td><button class='btn btn-primary book-button' disabled >Book</button></td>";
+                                }
+
+                            } else {
+
+
+                                $sql = "SELECT * FROM booking_slot WHERE day = '$day' AND slot_time = '$time_slot' AND date = '$date'";
+                                $result = $mysqli->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // Data exists, show "View" button
+                                    $rows = $result->fetch_all(MYSQLI_ASSOC);
+                                    $description = $rows[0]['description'];
+                                    $name = $rows[0]['username'];
+                                    $email = $rows[0]['email'];
+                                    echo "<td><button class='btn btn-success view-button' data-date='$date' data-day='$day' data-time='$time_slot'  date-description='$description' data-name='$name' data-email='$email'>Booked</button></td>";
+                                } else {
+                                    // Data doesn't exist, show "Book" button
+                                    echo "<td><button class='btn btn-primary book-button' data-date='$date' data-day='$day' data-time='$time_slot' data-name='$names' data-email='$emails' >Book</button></td>";
+                                }
+                            }
+                        }
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
     <!-- modal 1 for booking  -->
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -260,13 +262,27 @@ echo "</script>"
     </div>
 
     <!-- Include jquerycdn -->
-    
+
     <script src="jquery.js"></script>
 
 
     <script>
         // JavaScript to access data-day and data-time attributes
         document.addEventListener("DOMContentLoaded", function () {
+
+            const dateform = document.getElementById('dateInput')
+            const tables = document.getElementById('tableshow')
+            if (dateform.value) {
+                tables.style.display = "block";
+            } else {
+                // Create the text content
+                var text = "please select a date";
+
+                // Insert the text into the div
+                tables.textContent = text;
+            }
+
+
             const bookButtons = document.querySelectorAll(".book-button");
             const viewButtons = document.querySelectorAll(".view-button");
             bookButtons.forEach(function (button) {
@@ -353,6 +369,32 @@ echo "</script>"
                     const myModal2 = new bootstrap.Modal(document.getElementById("myModal2"));
                     myModal2.show();
 
+
+
+                    // Your table time
+                    var inputString = time;
+
+                    // Use a regular expression to extract the start hour and AM/PM
+                    var match = inputString.match(/(\d+)-\d+ (AM|PM)/);
+
+                    // Check if the match was found
+                    if (match) {
+                        var startHour = parseInt(match[1], 10);
+                        var period = match[2];
+
+                        if (period === "PM" && startHour !== 12) {
+                            startHour += 12;
+                        } else if (period === "AM" && startHour === 12) {
+                            startHour = 0;
+                        }
+
+                        console.log('Start Hour (24-hour format) on click:', startHour);
+                    } else {
+                        console.log('Start hour not found in the input string.');
+                    }
+
+                    // var buttonAppended = false; // Initialize a flag variable
+
                     // Create a new button element
                     var delButton = document.createElement("button");
 
@@ -360,16 +402,35 @@ echo "</script>"
                     delButton.setAttribute("type", "submit");
                     delButton.setAttribute("id", "deletebtn");
                     delButton.setAttribute("class", "btn btn-danger");
-
                     // Set button text
                     delButton.textContent = "Delete";
 
-                    console.log("flag:", flag);
 
-                    if (email == jsSessionEmail && flag == 0) { //check if flag 0 means its not beyound current date and time 
+                    var currentDate = new Date();
+
+                    // Get the current date (YYYY-MM-DD)
+                    var year = currentDate.getFullYear();
+                    var month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based, so add 1
+                    var dayjs = currentDate.getDate().toString().padStart(2, '0');
+
+                    var formattedDate = year + '-' + month + '-' + dayjs;
+
+                    // Get the current hour (24-hour format)
+                    var currenthour = currentDate.getHours().toString().padStart(2, '0');
+
+                    // Output the current date and hour
+                    console.log('Current Date:', formattedDate);
+                    console.log('Current Hour:', currenthour);
+
+
+                    if (email == jsSessionEmail && date >= formattedDate && startHour >= currenthour) { //check if flag 0 means its not beyound current date and time 
 
                         var parentElement = document.getElementById('modal2')
-                        parentElement.appendChild(delButton);
+                        if (!document.getElementById('deletebtn')) {
+                            parentElement.appendChild(delButton);
+                        }
+                    } else {
+                        document.getElementById('deletebtn').remove();
                     }
 
 
