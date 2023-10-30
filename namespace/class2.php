@@ -1,5 +1,5 @@
 <?php
-namespace aab;
+namespace aab; // namespace
 class sample{
     function __construct(){
         echo "hello this is class 2 sample php <br>";

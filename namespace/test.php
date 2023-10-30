@@ -2,7 +2,7 @@
 include "./class1.php";
 include "./class2.php";
 
-$obj=new xyz\sample();
+$obj=new xyz\sample(); // xyz is the namespace for 
 $obj= new  aab\sample();
 
 aab\demo();// for function access 

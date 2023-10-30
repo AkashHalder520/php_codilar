@@ -6,9 +6,12 @@ class class1{
 function func1(){
         echo "function one <br>";
         $this->var="ramesh";
+        
+
     }
     function func2(){
         echo "function two";
+        
     }
 
 }

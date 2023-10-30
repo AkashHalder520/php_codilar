@@ -1,6 +1,7 @@
 <?php 
 
 class car{ 
+    private $xb,$x ;
 function __construct($xb) //to use constructor in php we use __construct constructor by default gets called first 
 {
     $this->xb=$xb;// have to put all the paremeter in this vsriavle to acces in class constructor

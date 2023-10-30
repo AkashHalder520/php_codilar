@@ -39,6 +39,7 @@ class thirdclass implements class1,class2,class3
         echo "bye";
     }
 }
+// WE CAN NOT CREATE A OBJECT OF INTERFACE CLASS 
 $obj = new thirdclass();
 $obj->add(10, 10);
 $obj->sub(10, 10);
